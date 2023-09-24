@@ -37,8 +37,12 @@ html {
   --font-base-body-px: 16px;
   --spacing: 1rem;
 
+  /* Bil á milli „stærri“ eininga (header, efnisbox, footer) */
+  --vertical-space: calc(var(--gutter));
+
   /* Hámarksbreidd á efni */
-  --max-width: 900px;
+  --max-width: 1400px;
+  --width-offset: calc(100% - (2 * var(--offset)));
 
   /* Border breiddir */
   --border-small: 1px;
@@ -51,15 +55,20 @@ html {
   --color-dark: #2f0505;
   --color-light: #fff9ee;
 
-  --color-primary: #f0f0f8;
-  --color-header: #fff;
-  --color-text: #000;
-  --color-border: #ccc;
+  /* Grid stillingar */
+  --columns: 12;
+  --gutter: 30px;
+  --offset: 20px;
 
   /* Letur stillingar */
   --font-base-size: 1rem;
   --font-family-base: 'Noto Sans Display', Helvetica, Arial, sans-serif;
   --font-family-heading: 'Lora', Georgia, serif;
+
+  /* Transitions */
+  --transition-time-short: 300ms;
+  --transition-time-long: 600ms;
+  --transition-timing-function: ease-in-out;
 }
 
 /* Almennt */
@@ -101,14 +110,61 @@ img {
   width: 1px;
 }
 
+/* Takki */
+
+.button {
+  display: inline-block;
+
+  border: 1px solid var(--color-dark);
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing) / 2) calc(var(--spacing));
+
+  font-family: var(--font-family-base);
+  text-decoration: none;
+  text-align: center;
+
+  color: var(--color-light);
+  background-color: var(--color-dark);
+
+  transition: background-color var(--transition-time-short)
+      var(--transition-timing-function),
+    color var(--transition-time-short);
+}
+
+.button:hover {
+  color: var(--color-dark);
+  background-color: var(--color-gold);
+}
+
+/* Fade in animation */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.header,
+.main {
+  animation: var(--transition-time-long) var(--transition-timing-function) fade-in;
+}
+
+
 /* Layout */
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing);
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 100%;
 
-  min-height: 100vh;
+  /* grid items eru miðjuð */
+  justify-items: center;
+
+  gap: var(--vertical-space);
 }
 
 /** Haus **/
@@ -119,6 +175,8 @@ img {
   align-items: center;
   gap: var(--spacing);
 
+  padding-top: var(--spacing);
+  width: 100%;
   border-bottom: var(--border-large) solid var(--color-gold);
 
   background-color: var(--color-dark);
@@ -129,12 +187,19 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  max-width: var(--width-offset);
+
+  text-align: center;
 }
 
 /** Valmynd **/
 
 .navigation {
-  padding: var(--spacing);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: var(--spacing) 0;
   width: 100%;
 
   background-color: var(--color-light);
@@ -143,10 +208,12 @@ img {
 
 .navigation ul {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: var(--spacing);
 
   width: 100%;
+  max-width: var(--width-offset);
 
   list-style: none;
 }
@@ -154,32 +221,50 @@ img {
 /** Meginmál **/
 
 .main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing);
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 100%;
+  gap: var(--vertical-space);
 
-  margin: 0 auto;
-  padding-left: var(--spacing);
-  padding-right: var(--spacing);
-  width: 100%;
+  width: var(--width-offset);
   max-width: var(--max-width);
 }
 
 /** Fótur **/
 
 .footer {
-  display: flex;
-  justify-content: center;
-  gap: var(--spacing);
-
   padding: var(--spacing);
   border-top: var(--border-large) solid var(--color-gold);
+  width: 100%;
 
   background-color: var(--color-dark);
   color: var(--color-gold-light);
+}
+
+.footer .content {
+  display: grid;
+  gap: var(--vertical-space);
+
+  margin: 0 auto;
 
   text-align: center;
+}
+
+@media (min-width: 500px) {
+  .footer .content {
+    grid-template-columns: repeat(var(--columns), 1fr);
+    grid-template-rows: auto;
+
+    max-width: var(--max-width);
+  }
+
+  .footer section {
+    grid-column-end: span 4;
+  }
+
+  .footer section:first-child {
+    grid-column-start: 3;
+  }
 }
 
 .footer ul {
@@ -189,27 +274,48 @@ img {
 /* Box! */
 
 .boxes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--spacing) * 2) var(--spacing);
+  display: grid;
+  grid-template-rows: auto;
+  gap: var(--vertical-space);
+  justify-items: center;
 
-  margin-bottom: calc(var(--spacing) * 2);
   width: 100%;
 }
 
+@media (min-width: 500px) {
+  .boxes {
+    grid-template-columns: repeat(var(--columns), 1fr);
+    grid-template-rows: auto;
+  }
+}
+
 .boxes .box {
+  grid-column: span 12;
+
   display: flex;
   flex-direction: column;
 
   gap: var(--spacing);
 
   padding: calc(var(--spacing) * 0.5);
-  width: calc(50% - var(--spacing) * 0.5);
+  width: 100%;
   min-height: 100px;
 
   color: var(--color-dark);
   background-color: var(--color-gold-light);
   border-radius: 5px;
+}
+
+@media (min-width: 500px) {
+  .boxes .box {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1000px) {
+  .boxes .box {
+    grid-column: span 4;
+  }
 }
 
 .boxes .box .title {
@@ -222,17 +328,16 @@ img {
 }
 
 .boxes .box img {
-
   max-height: 400px;
 
   object-fit: cover;
   object-position: top center;
 }
 
-.boxes .box .link {
-  margin-top: calc(var(--spacing) * 0.5);
-
-  font-weight: bold;
+@media (min-width: 1000px) {
+  .boxes .box img {
+    max-height: 350px;
+  }
 }
 
 /* Opnunartími */
@@ -254,6 +359,7 @@ table {
 table th,
 table td {
   padding: calc(var(--spacing) * 0.5);
+  text-align: left;
 }
 
 table tbody tr:nth-child(2n + 1) {
@@ -280,6 +386,11 @@ fieldset input,
 fieldset select,
 fieldset textarea {
   padding: calc(var(--spacing) * 0.5);
+  width: 100%;
+}
+
+fieldset input[type='checkbox'] {
+  width: auto;
 }
 
 fieldset .checkbox label {
