@@ -1,0 +1,17 @@
+{
+  "name": "vef1-2023-v5-synilausn",
+  "version": "1.0.0",
+  "description": "[Sjá lýsingu á verkefni](https://github.com/vefforritun/vef1-2023-v5).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.29.3",
+    "sass": "^1.69.4",
+    "stylelint": "^15.11.0"
+  }
+}
