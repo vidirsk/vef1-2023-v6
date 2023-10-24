@@ -8,7 +8,10 @@
     "sass": "sass styles.scss styles.css",
     "sass-watch": "sass --watch *.scss styles.css",
     "dev": "concurrently npm:sass-watch npm:browser-sync",
-    "lint": "stylelint styles.scss ./**/*.scss"
+    "lint": "stylelint styles.scss ./**/*.scss",
+    "copy:html": "cpy ./*.html ./build/",
+    "copy:css": "cpy ./*.css ./build/",
+    "build": "concurrently npm:copy:*"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
   "devDependencies": {
     "browser-sync": "^2.29.3",
     "concurrently": "^8.2.2",
+    "cpy-cli": "^5.0.0",
     "sass": "^1.69.4",
     "stylelint": "^15.11.0",
     "stylelint-config-sass-guidelines": "^10.0.0",

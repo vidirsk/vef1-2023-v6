@@ -1,7 +1,9 @@
 {
     "extends": ["stylelint-config-sass-guidelines"],
     "rules": {
-        "selector-no-qualifying-type": null
+        "selector-no-qualifying-type": null,
+        "function-url-quotes": null,
+        "rule-empty-line-before": null,
         "selector-pseudo-element-colon-notation": null
     }
 }
