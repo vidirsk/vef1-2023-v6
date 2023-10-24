@@ -1,0 +1,7 @@
+{
+    "extends": ["stylelint-config-sass-guidelines"],
+    "rules": {
+        "selector-no-qualifying-type": null
+        "selector-pseudo-element-colon-notation": null
+    }
+}
